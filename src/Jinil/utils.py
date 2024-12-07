@@ -63,7 +63,7 @@ def single_weights_matrix(shape: tuple[int]) -> np.ndarray:
 
 def blending_weight(img, sift_matrix, canvas):
     weight = single_weights_matrix(img.shape[:2])
-    warped_weight = warp_perpective(weight, sift_matrix, canvas.shape)
+    warped_weight = warp_perpective(weight, sift_matrix, canvas)
     return warped_weight
     
 def normalize_weights(weight1, weight2):
