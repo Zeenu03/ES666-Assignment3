@@ -31,6 +31,38 @@ def transform(src_pts, H):
     des = (des / des[:, 2].reshape(-1, 1))[:, :2]
     return des
 
+def cylindrical_warp(img, focal_length):
+    '''
+    Warp img to a cylindrical coordinate system.
+    '''
+    h, w = img.shape[:2]
+    x_c, y_c = w // 2, h // 2
+    
+    u, v = np.meshgrid(np.arange(w), np.arange(h))
+    
+    theta = (u - x_c) / focal_length
+    h_cyl = (v - y_c) / focal_length
+    
+    x_cyl = np.sin(theta)
+    y_cyl = h_cyl
+    z_cyl = np.cos(theta)
+    
+    # Convert from cylindrical coordinates to image coordinates
+    x_img = np.round(focal_length * x_cyl / z_cyl + x_c).astype(np.int32)
+    y_img = np.round(focal_length * y_cyl / z_cyl + y_c).astype(np.int32)
+    
+    # Create a mask for valid points within the image bounds
+    mask = (x_img >= 0) & (x_img < w) & (y_img >= 0) & (y_img < h)
+    
+    # Create the output image, initially black
+    cylindrical_img = np.zeros_like(img)
+    cylindrical_img[v[mask], u[mask]] = img[y_img[mask], x_img[mask]]
+    
+    cylindrical_img = Image.fromarray(cylindrical_img)
+    cylindrical_img = cylindrical_img.crop((u[mask].min(), v[mask].min(), u[mask].max(), v[mask].max()))
+    cylindrical_img = np.array(cylindrical_img)
+    
+    return cylindrical_img
 
 def warp_perpective(img, H, size):
     width, height = size
@@ -87,20 +119,20 @@ def transform_corners(img, sift_matrix):
     
     return transformed_corners, min_x, min_y, max_x, max_y
 
-def shift_matrix_left_size(img, img_ref, H):
+def shift_matrix_left_size(img_src, img_des, H):
     
-    corners, min_x, min_y, max_x, max_y = transform_corners(img, H)
+    corners, min_x, min_y, max_x, max_y = transform_corners(img_src, H)
     shift_matrix = np.array([[1, 0, -min_x], [0, 1, -min_y], [0, 0, 1]])
-    size = img_ref.shape[1] - int(min_x), img_ref.shape[0] - int(min_y)
+    size = img_des.shape[1] - int(min_x), img_des.shape[0] - int(min_y)
     
     return shift_matrix, size
 
-def shift_matrix_right_size(img, img_ref, H):
+def shift_matrix_right_size(img_src, img_des, H):
         
-        corners, min_x, min_y, max_x, max_y = transform_corners(img, H)
+        corners, min_x, min_y, max_x, max_y = transform_corners(img_src, H)
         shift_x, shift_y = -min(min_x, 0), -min(min_y, 0)
         shift_matrix = np.array([[1, 0, shift_x], [0, 1, shift_y], [0, 0, 1]])
-        size = int(max(img_ref.shape[1], int(max_x)) + shift_x), int(max(img_ref.shape[0], int(max_y)) + shift_y)
+        size = int(max(img_des.shape[1], int(max_x)) + shift_x), int(max(img_des.shape[0], int(max_y)) + shift_y)
         
         return shift_matrix, size
        
