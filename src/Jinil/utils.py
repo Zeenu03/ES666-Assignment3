@@ -34,6 +34,7 @@ def transform(src_pts, H):
 
 def warp_perpective(img, H, size):
     width, height = size
+
     warped_img = np.zeros((height, width, img.shape[2]), dtype=np.uint8)
     idx_pts = np.mgrid[0:width, 0:height].reshape(2, -1).T
     
@@ -63,14 +64,14 @@ def single_weights_matrix(shape: tuple[int]) -> np.ndarray:
 
 def blending_weight(img, sift_matrix, canvas):
     weight = single_weights_matrix(img.shape[:2])
-    warped_weight = warp_perpective(weight, sift_matrix, canvas)
+    warped_weight = cv2.warpPerspective(weight, sift_matrix, canvas)
     return warped_weight
     
 def normalize_weights(weight1, weight2):
     total_weight = (weight1 + weight2) / (weight1 + weight2).max()
     
-    weight1_norm = np.devide(weight1, total_weight, where=total_weight!=0)
-    weight2_norm = np.devide(weight2, total_weight, where=total_weight!=0)
+    weight1_norm = np.divide(weight1, total_weight, where=total_weight!=0)
+    weight2_norm = np.divide(weight2, total_weight, where=total_weight!=0)
     
     return weight1_norm, weight2_norm, total_weight
 
