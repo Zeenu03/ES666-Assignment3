@@ -1,13 +1,19 @@
 
 # EE-666: Assignment 3 - Panaroma Stitching
 
-## Show results image here
-![Panaroma](./results/I1/Jinil_stitcher.png)
-![Panaroma](./results/I2/Jinil_stitcher.png)
-![Panaroma](./results/I3/Jinil_stitcher.png)
-![Panaroma](./results/I4/Jinil_stitcher.png)
-![Panaroma](./results/I5/Jinil_stitcher.png)
-![Panaroma](./results/I6/Jinil_stitcher.png)
+## Show results image here using div
+<div>
+    <img src="./results/I1/Jinil_stitcher.png"/>
+    <br>
+    <img src="./results/I2/Jinil_stitcher.png"/>
+    <br>
+    <img src="./results/I3/Jinil_stitcher.png"/>
+    <br>
+    <img src="./results/I4/Jinil_stitcher.png"/>
+    <br>
+    <img src="./results/I5/Jinil_stitcher.png"/>
+    <br>
+    <img src="./results/I6/Jinil_stitcher.png"/>
 
 ### Pre-requisites
  - Github Account.  Don't have one still? Create one. 
