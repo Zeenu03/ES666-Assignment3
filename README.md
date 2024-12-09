@@ -1,7 +1,6 @@
 
-# EE-666: Assignment 3 - Panaroma Stitching
+# ES-666: Assignment 3 - Panaroma Stitching
 
-## Show results image here using div
 <div>
     <img src="./results/I1/Jinil_stitcher.png"/>
     <br>
