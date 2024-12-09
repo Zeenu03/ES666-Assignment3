@@ -1,9 +1,13 @@
 
 # EE-666: Assignment 3 - Panaroma Stitching
 
-## Given a set of images, Find Homography matrices and stitch images to make a Panaroma.
-This assignment is intended to provide practical experience with GitHub, along with the concepts discussed in class.
-
+## Show results image here
+![Panaroma](./results/I1/Jinil_stitcher.png)
+![Panaroma](./results/I2/Jinil_stitcher.png)
+![Panaroma](./results/I3/Jinil_stitcher.png)
+![Panaroma](./results/I4/Jinil_stitcher.png)
+![Panaroma](./results/I5/Jinil_stitcher.png)
+![Panaroma](./results/I6/Jinil_stitcher.png)
 
 ### Pre-requisites
  - Github Account.  Don't have one still? Create one. 
